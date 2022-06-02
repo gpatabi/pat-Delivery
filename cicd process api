@@ -1,0 +1,67 @@
+https://anypoint.mulesoft.com/apimanager/xapi/v1/organizations/{{org}}/environments/{{env}}/apis?limit=20&offset=0&pinnedFirst=true&query=sapi-pmg-cash-flow&sort=name&ascending=false
+
+curl --location -g --request POST 'https://anypoint.mulesoft.com/apimanager/api/v1/organizations/{{org}}/environments/{{env}}/apis' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <<>>' \
+--data-raw '{
+    "endpoint": {
+        "deploymentType": "CH",
+        "isCloudHub": null,
+        "muleVersion4OrAbove": true,
+        "proxyUri": null,
+        "referencesUserDomain": null,
+        "responseTimeout": null,
+        "type": "raml",
+        "uri": "https://test.com"
+    },
+    "providerId": null,
+    "instanceLabel": null,
+    "spec": {
+        "assetId": "test-flow",
+        "groupId": "1234",
+        "version": "1.0.0"
+    }
+}'
+
+
+Deploy
+curl --location --request POST 'https://anypoint.mulesppmoft.com/cloudhub/api/v2/applications' \
+--header 'X-ANYPNT-ENV-ID:  <<>>' \
+--header 'X-ANYPNT-ORG-ID: <<>>' \
+--header 'Authorization: Bearer <<>>' \
+--form 'file=@"/C:/Users/pgollapalli/Downloads/<<>>.jar"' \
+--form 'appInfoJson="{
+    \"domain\": \"test-proxy-test\",
+    \"muleVersion\": {
+        \"version\": \"4.4.0\"
+    },
+	\"properties\": {
+        \"anypoint.platform.client_id\": \"<<>\",
+        \"secure.key\": \"<<>>\",
+        \"env\": \"dev\",
+        \"anypoint.platform.client_secret\": \"<<>>\"
+    },
+	\"propertiesOptions\": {
+        \"secure.key\": {
+            \"secure\": true
+        },
+        \"anypoint.platform.client_secret\": {
+            \"secure\": true
+        }
+    },
+    \"region\": \"us-west-1\",
+    \"monitoringEnabled\": true,
+    \"monitoringAutoRestart\": true,
+    \"workers\": {
+        \"amount\": 1,
+        \"type\": {
+            \"name\": \"Micro\",
+            \"weight\": 0.1,
+            \"cpu\": \"0.1 vCores\",
+            \"memory\": \"500 MB memory\"
+        }
+    },
+    \"loggingNgEnabled\": true,
+    \"persistentQueues\": true
+}"' \
+--form 'autoStart="true"'
